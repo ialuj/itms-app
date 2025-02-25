@@ -19,6 +19,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.apache.hc.client5.http.classic.methods.HttpGet;
 import org.apache.hc.client5.http.classic.methods.HttpPost;
+import org.apache.hc.client5.http.classic.methods.HttpPut;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpResponse;
 import org.apache.hc.client5.http.impl.classic.HttpClients;
@@ -244,12 +245,12 @@ public class TicketServices {
             
             String employeeId = UserServices.loggedUser.getId()+"";
             String encodedStatus = URLEncoder.encode(newStatus, StandardCharsets.UTF_8.toString());
-            url = url.concat("?userId=").concat(employeeId).concat("?status=").concat(encodedStatus);
+            url = url.concat("?userId=").concat(employeeId).concat("&status=").concat(encodedStatus);
 
-            HttpPost httpPost = new HttpPost(url);
-            httpPost.setHeader("Content-Type", "application/json");
+            HttpPut httpPut = new HttpPut(url);
+            httpPut.setHeader("Content-Type", "application/json");
 
-            try (CloseableHttpResponse response = client.execute(httpPost)) {
+            try (CloseableHttpResponse response = client.execute(httpPut)) {
                 return response.getCode()+"";
             }
         } catch (IOException e) {

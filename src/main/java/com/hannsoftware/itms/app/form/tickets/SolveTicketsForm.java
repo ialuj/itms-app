@@ -49,9 +49,13 @@ public class SolveTicketsForm extends JFrame {
     private void loadTickets() {
         List<TicketDTO> tickets = TicketServices.getAllUnsolvedTickets();
 
+        if(tickets==null || tickets.isEmpty()) {
+            tableModel.setRowCount(0);
+        } else {
         tableModel.setRowCount(0);
         for (TicketDTO ticket : tickets) {
             tableModel.addRow(new Object[]{ticket.getId(), ticket.getTitle(), ticket.getPriority(), ticket.getStatus(), "Comment", "Update Status"});
+        }
         }
     }
 
